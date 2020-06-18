@@ -36,25 +36,34 @@ const Todo = () => {
 
     const clearCompleted = () => {
         const clearedState = state.filter(task => task.completed === false);
-        const tasks = document.querySelectorAll('p');
+        const tasks = document.querySelectorAll('.task');
         dispatch({type: "CLEAR_COMPLETED", payload:clearedState});
-
+        console.log(tasks);
         tasks.forEach(todo => {
-            console.log(todo);
-            state.map(element => {
-                if(element.item === todo.textContent){
-                    console.log("item matches text");
-                    if(element.completed === false){
-                        console.log("not completed");
-                        todo.classList.remove("strike");
-                    }
-                    else{
-                        console.log("completed");
-                        todo.classList.add("strike");
-                    }
-                }
-            });
-        })
+            console.log(todo.classList);
+            if(todo.classList.contains("strike")){
+                console.log("We found one!");
+                todo.classList.remove("strike");
+            }
+            
+        });
+
+        // tasks.forEach(todo => {
+        //     console.log(todo);
+        //     state.map(element => {
+        //         if(element.item === todo.textContent){
+        //             console.log("item matches text");
+        //             if(element.completed === false){
+        //                 console.log("not completed");
+        //                 todo.classList.remove("strike");
+        //             }
+        //             else{
+        //                 console.log("completed");
+        //                 todo.classList.add("strike");
+        //             }
+        //         }
+        //     });
+        // })
     }
 
     return (
@@ -79,7 +88,7 @@ const Todo = () => {
 
             <div>
                 {state.map((element, index) => {
-                    return (<p onClick = {toggleCompleted} className = {`task${index}`} >{element.item}</p>);
+                    return (<p onClick = {toggleCompleted} className = {'task'} >{element.item}</p>);
                 })}  
             </div>
             <button onClick = {()=>{console.log(state)}}>Check State</button>
