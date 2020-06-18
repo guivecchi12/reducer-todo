@@ -12,11 +12,24 @@ const Todo = () => {
 
     const toggleCompleted = (e) =>{
         const text = e.target.textContent;
-        
-        e.target.classList.toggle("strike");
         dispatch({type: "TOGGLE_COMPLETED", payload:text});
-        
+        // console.log(state);
+        state.map(task => {
+            // console.log(task);
+            if(task.item === text){
+                // console.log("matched text");
+                if(task.completed === true){
+                    // console.log("COMPLETED")
+                    e.target.classList.add("strike");
+                }
+                else{
+                    // console.log("not Completed")
+                    e.target.classList.remove("strike");
+                };
+            };
+        });
     }
+
     const clear = () => {
         setNewTodo("");
     }
@@ -24,19 +37,24 @@ const Todo = () => {
     const clearCompleted = () => {
         const clearedState = state.filter(task => task.completed === false);
         const tasks = document.querySelectorAll('p');
+        dispatch({type: "CLEAR_COMPLETED", payload:clearedState});
+
         tasks.forEach(todo => {
+            console.log(todo);
             state.map(element => {
-                if(element.item === todo){
+                if(element.item === todo.textContent){
+                    console.log("item matches text");
                     if(element.completed === false){
+                        console.log("not completed");
                         todo.classList.remove("strike");
                     }
                     else{
+                        console.log("completed");
                         todo.classList.add("strike");
                     }
                 }
             });
         })
-        dispatch({type: "CLEAR_COMPLETED", payload:clearedState});
     }
 
     return (
