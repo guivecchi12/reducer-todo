@@ -19,6 +19,12 @@ const Todo = () => {
         setNewTodo("");
     }
 
+    const clearCompleted = () => {
+        const clearedState = state.filter(task => task.completed === false);
+
+        dispatch({type: "CLEAR_COMPLETED", payload:clearedState});
+    }
+
     return (
         <div>
             <div>
@@ -36,6 +42,7 @@ const Todo = () => {
                 }}>
                     Add Todo
                 </button>
+                <button onClick = {clearCompleted}>Clear Completed Tasks</button>
             </div>
 
             <div>
@@ -43,7 +50,7 @@ const Todo = () => {
                     return (<p onClick = {toggleCompleted}>{element.item}</p>);
                 })}  
             </div>
-                <button onClick = {()=>{console.log(state)}}>Check State</button>
+            <button onClick = {()=>{console.log(state)}}>Check State</button>
         </div>
     );
 };
