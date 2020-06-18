@@ -12,8 +12,10 @@ const Todo = () => {
 
     const toggleCompleted = (e) =>{
         const text = e.target.textContent;
-        dispatch({type: "TOGGLE_COMPLETED", payload:text});
+        
         e.target.classList.toggle("strike");
+        dispatch({type: "TOGGLE_COMPLETED", payload:text});
+        
     }
     const clear = () => {
         setNewTodo("");
@@ -21,7 +23,19 @@ const Todo = () => {
 
     const clearCompleted = () => {
         const clearedState = state.filter(task => task.completed === false);
-
+        const tasks = document.querySelectorAll('p');
+        tasks.forEach(todo => {
+            state.map(element => {
+                if(element.item === todo){
+                    if(element.completed === false){
+                        todo.classList.remove("strike");
+                    }
+                    else{
+                        todo.classList.add("strike");
+                    }
+                }
+            });
+        })
         dispatch({type: "CLEAR_COMPLETED", payload:clearedState});
     }
 
@@ -46,8 +60,8 @@ const Todo = () => {
             </div>
 
             <div>
-                {state.map(element => {
-                    return (<p onClick = {toggleCompleted}>{element.item}</p>);
+                {state.map((element, index) => {
+                    return (<p onClick = {toggleCompleted} className = {`task${index}`} >{element.item}</p>);
                 })}  
             </div>
             <button onClick = {()=>{console.log(state)}}>Check State</button>

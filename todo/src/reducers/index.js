@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const initialState = [{
     item: 'Learn about reducers',
     completed: false,
@@ -11,9 +13,6 @@ export const todoReducer = (state, action) =>{
         case "ADD_ITEM":
             return [...state, {item: action.payload, completed:false, id: Date.now()}];
 
-        case 'CLEAR_COMPLETED':
-            return state = Array.from(action.payload);
-
         case "TOGGLE_COMPLETED":
             state.map(todo => {
                 if (todo.item === action.payload)
@@ -21,6 +20,11 @@ export const todoReducer = (state, action) =>{
                     todo.completed = !todo.completed;
                 };
             }); 
+            return state;
+
+        case 'CLEAR_COMPLETED':
+            
+            return state = Array.from(action.payload);
 
         default:
             return state;
